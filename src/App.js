@@ -9,9 +9,24 @@ import Rating from './Rating';
 import { RouteNode } from 'react-router5'
 
 class App extends Component {
-
+        
+    getParameter = (string, parameter) => {
+        let linkParams = string.split("&");
+        
+        for(var i=0; i < linkParams.length; i++){
+            let value = linkParams[i].split("=");
+            if (value[0] === parameter){
+                return value[1];
+            }
+        }
+        return "";
+    }
 
     render() {
+        const querystring = window.location.search.substring(1);
+        const invintationID = this.getParameter(querystring, 'id');
+        const currentID = this.getParameter(querystring, 'userID');
+        
         let activePanel = 'personalPanel';
         
         const routename = this.props.route.name;
@@ -39,6 +54,7 @@ class App extends Component {
         );
     }
 }
+
 
 function mapStateToProps(state) {
     return {
