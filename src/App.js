@@ -55,9 +55,9 @@ class App extends React.Component {
         }
         
         if(invintationID === ""){
-            return (<h1>{this.invintationID}</h1>)
+            return (<h1>Hello, H1</h1>)
         }else{
-                return (<h2>{this.invintationID}</h2>)
+                return (<h2>Hello, H2</h2>)
         }
     }
 }
