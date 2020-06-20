@@ -5,7 +5,7 @@ import routes from './routes'
 
 export default function configureRouter() {
     const router = createRouter(routes, {
-        defaultRoute: 'personal'
+        defaultRoute: 'auth'
     })
 
     router.usePlugin(loggerPlugin)

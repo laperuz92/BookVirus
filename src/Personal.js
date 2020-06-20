@@ -1,9 +1,41 @@
 import React, { Component } from 'react';
 import { SimpleCell, InfoRow, Button, Panel, Header, Switch, PanelHeader, Cell, Group } from '@vkontakte/vkui';
 import Footer from './Footer'
+import {withCookies, Cookies} from 'react-cookie';
+import {instanceOf} from 'prop-types'
+
 
 class Personal extends Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
+    constructor(props) {
+        super(props);
+
+        const {cookies} = props;
+        this.state = {
+            user_id: cookies.get('user_id') || null,
+            name: cookies.get('user_name') || '',
+            parent_id:cookies.get('parent_id') || null,
+            rules_check: cookies.get('rules_check')==='true',
+        };
+        const {user_id, rules_check} = this.state;
+
+        console.log("plkj")
+        console.log(user_id)
+        if (typeof(user_id) == 'undefined' || user_id == null ) {
+            this.props.router.navigate('auth');
+        }
+        console.log(";lkji")
+        console.log( typeof rules_check)
+        if (!rules_check) {
+            this.props.router.navigate('about');
+        }
+    }
+
   render() {
+
       //TODO переделать на получение из БД
       const Books = ["Гарри поттер", "Властелин колец", "1984"];
       const BooksReceived = 19;
@@ -27,10 +59,9 @@ class Personal extends Component {
         </Panel>
     );
   }
-        
+
         openRating() {
           this.props.router.navigate('rating');
         }
 }
-
-export default Personal;
+export default withCookies(Personal);
