@@ -1,11 +1,20 @@
-import "core-js/features/map";
-import "core-js/features/set";
-import React from "react";
-import ReactDOM from "react-dom";
-import bridge from "@vkontakte/vk-bridge";
-import App from "./App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import { RouterProvider } from 'react-router5'
+import createRouter from './create-router'
+import configureStore  from './reducers';
+import App from './App';
 
-// Init VK  Mini App
-bridge.send("VKWebAppInit");
+const router = createRouter()
+const store = configureStore(router)
 
-ReactDOM.render(<App />, document.getElementById("root"));
+router.start(() => {
+    ReactDOM.render((
+        <Provider store={store}>
+            <RouterProvider router={router}>
+                <App router={router}/>
+            </RouterProvider>
+        </Provider>
+    ), document.getElementById('root'))
+})
